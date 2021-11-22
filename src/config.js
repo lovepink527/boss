@@ -1,18 +1,18 @@
 import axios from 'axios'
 import { Toast } from 'antd-mobile'
+import 'antd-mobile/dist/antd-mobile.css';
 
 // 拦截请求
 axios.interceptors.request.use(function(config){
-	Toast.show({
-		icon: 'loading',
-		content: '请求中…',
-	  })
+	Toast.loading('Loading...', 1, () => {
+		console.log('Load complete !!!');
+	  });
 	return config
 })
 
 // 拦截相应
 
 axios.interceptors.response.use(function(config){
-	Toast.clear()
+	Toast.hide()
 	return config
 })

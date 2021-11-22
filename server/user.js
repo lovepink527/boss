@@ -4,6 +4,8 @@ const models = require('./model')
 const User = models.getModel('user')
 const utils = require('utility')
 const bodyParser = require('body-parser')
+const json = require('body-parser/lib/types/json')
+const cookieParser = require('cookie-parser')
 
 const _filter = {'pwd': 0,'_v':0}
 
@@ -23,9 +25,11 @@ Router.get('/info',function(req,res){
 })
 
 Router.get('/list',function(req,res){
+    // console.log(req.query)
+    const {type} = req.query
     // User.remove({},function(e,d){})
-    User.find({},function(err,doc){
-        return res.json(doc)
+    User.find({type},function(err,doc){
+        return res.json({code:0,data:doc})
     })
 })
 
@@ -58,6 +62,20 @@ Router.post('/register',bodyParser.json(),function(req,res){
     })
 })
 
+Router.post('/update',bodyParser.json(),function(req,res){
+    const userid = req.cookies.userid
+    if(!userid){
+        return res.json({code:1})
+    }
+    const body = req.body
+    User.findByIdAndUpdate(userid,body,function(err,doc){
+        const data = Object.assign({},{
+            user:doc.user,
+            type:doc.type
+        },body)
+            return res.json({code:0,data})
+    })
+})
 function md5Pwd(pwd){
     const salt = 'imooc_is_good_234354324234'
     return utils.md5(utils.md5(pwd + salt))
