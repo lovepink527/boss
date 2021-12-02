@@ -1,11 +1,14 @@
-const express = require('express')
+const express = require('express');
 const Router = express.Router()
-const models = require('./model')
+const models = require('./model');
 const User = models.getModel('user')
-const utils = require('utility')
-const bodyParser = require('body-parser')
-const json = require('body-parser/lib/types/json')
-const cookieParser = require('cookie-parser')
+const Chat = models.getModel('chat')
+const utils = require('utility');
+const bodyParser = require('body-parser');
+const json = require('body-parser/lib/types/json');
+const cookieParser = require('cookie-parser');
+
+// Chat.remove({},function(e,d){})
 
 const _filter = {'pwd': 0,'_v':0}
 
@@ -25,7 +28,7 @@ Router.get('/info',function(req,res){
 })
 
 Router.get('/list',function(req,res){
-    // console.log(req.query)
+    console.log(req.query)
     const {type} = req.query
     // User.remove({},function(e,d){})
     User.find({type},function(err,doc){
@@ -76,6 +79,22 @@ Router.post('/update',bodyParser.json(),function(req,res){
             return res.json({code:0,data})
     })
 })
+
+Router.get('/getmsglist',function(req,res){
+    const user = req.cookies.userid
+    var users = {}
+    User.find({},function(e,userdoc){
+        userdoc.forEach(v=>{
+            users[v._id] = {name:v.user,avatar:v.avatar}
+        })
+    })
+    Chat.find({'$or':[{from:user},{to:user}]},function(err,doc){
+        if(!err){
+            return res.json({code:0,msgs:doc,users:users})
+        }
+    })
+})
+
 function md5Pwd(pwd){
     const salt = 'imooc_is_good_234354324234'
     return utils.md5(utils.md5(pwd + salt))

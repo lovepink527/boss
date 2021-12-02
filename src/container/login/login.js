@@ -6,29 +6,26 @@ import {connect} from 'react-redux'
 import {login} from '../../redux/user.redux'
 import {Redirect} from 'react-router-dom'
 import 'antd-mobile/dist/antd-mobile.css';
+import imoocForm from '../../component/imoocform/imoocform'
 
 @connect(
     state=>state.user,
     {login}
 )
 
+@imoocForm
+
 class Login extends React.Component{
     constructor(props){
         super(props);
-        this.state = {}
         this.register = this.register.bind(this)
         this.handleLogin = this.handleLogin.bind(this)
-    }
-    handleChange(key,val) {
-        this.setState({
-            [key]:val
-        })
     }
     register() {
         this.props.history.push('/register')
     }
     handleLogin(v) {
-        this.props.login(this.state)
+        this.props.login(this.props.state)
     }
     render() {
         return (
@@ -41,12 +38,12 @@ class Login extends React.Component{
 					<List>
 						{this.props.msg?<p className='error-msg'>{this.props.msg}</p>:null}
 						<InputItem
-							onChange={v=>this.handleChange('user',v)}
+							onChange={v=>this.props.handleChange('user',v)}
 
 						>用户</InputItem>
 						<WhiteSpace />
 						<InputItem
-							onChange={v=>this.handleChange('pwd',v)}
+							onChange={v=>this.props.handleChange('pwd',v)}
 							type='password'
 						>密码</InputItem>
 					</List>

@@ -1,15 +1,15 @@
 
 import React from 'react'
 import {getUserList} from '../../redux/chatuser.redux'
-import UserCard from '../userinfo/userinfo'
 import {connect} from 'react-redux'
+import UserCard from '../userinfo/userinfo'
 
 @connect(
     state=>state.chatuser,
     {getUserList}
 )
 
-class Boss extends React.Component{
+class Genius extends React.Component{
     constructor(props){
         super(props)
         this.state={
@@ -17,7 +17,7 @@ class Boss extends React.Component{
         }
     }
     componentDidMount() {
-        this.props.getUserList('genius')
+        this.props.getUserList('boss')
     }
     render(){
         return (<div>
@@ -26,4 +26,4 @@ class Boss extends React.Component{
     }
 }
 
-export default Boss
+export default Genius

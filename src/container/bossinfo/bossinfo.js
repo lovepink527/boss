@@ -25,8 +25,8 @@ class BossInfo extends React.Component{
         console.log(this.state)
     }
     render(){
-        const path = this.props.location.pathname
-        const redirect = this.props.redirectTo
+        // const path = this.props.location.pathname
+        // const redirect = this.props.redirectTo
         return (
             <div>
                 {this.props.redirectTo? <Redirect to={this.props.redirectTo}></Redirect>: null}

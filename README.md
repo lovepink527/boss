@@ -153,4 +153,17 @@ class Test extends React.component{
   }
 }
  ```
+
+ ###### 高阶组件
+ 1. 函数当参数、或者当返回值
+ 2. 在原有组件上加上一些属性返回，包装一层
+ 3. 属性代理、反向代理
+
+  ###### socket.io
+  1. ajax基于http协议，单向，实时获取数据只能轮询
+  2. socket.io基于websocket双向通信协议，后端可以主动推送数据
+
+  #### 1.eslint代码校验工具
+  #### 2.react16特有的错误处理机制
+  #### 3. react性能优化k
  

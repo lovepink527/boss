@@ -1,5 +1,5 @@
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const DB_URL = 'mongodb://127.0.0.1:27017/boss'
 mongoose.connect(DB_URL)
 mongoose.connection.on('connected',function() {
@@ -22,7 +22,12 @@ const models = {
         'money':{type: Number}
     },
     chat: {
-
+        'chatid':{'type':String,require:true},
+        'from': {type:String,require:true},
+        'to':{type:String,require:true},
+        'read':{type:Boolean,default:false},
+        'content':{type:String,require:true,default:''},
+        'create_time':{type:Number,default:new Date().getTime()}
     }
 }
 
